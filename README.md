@@ -1,4 +1,4 @@
-# mr.vim
+# 🧷 mr.vim
 
 _mr.vim_ (mr) is a plugin to asynchronously record MRU (Most Recently Used) and MRW (Most Recently Written) files.
 It also provides commands to list MRU/MRW in quickfix.
