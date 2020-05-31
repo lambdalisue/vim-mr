@@ -1,0 +1,144 @@
+*mr.txt*		Asynchronous Most Recently Used/Written record plugin
+
+Author:  Alisue <lambdalisue@hashnote.net>
+License: MIT license
+
+=============================================================================
+CONTENTS						*mr-contents*
+
+INTRODUCTION				|mr-introduction|
+USAGE					|mr-usage|
+INTERFACE				|mr-interface|
+  VARIABLE				|mr-variable|
+  COMMAND				|mr-command|
+  FUNCTION				|mr-function|
+FAQ					|mr-faq|
+CHANGELOG				|mr-changelog|
+
+
+=============================================================================
+INTRODUCTION						*mr-introduction*
+
+*mr.vim* (mr) is a plugin to asynchronously record MRU (Most Recently Used)
+and MRW (Most Recently Written) files. It also provides commands to list
+MRU/MRW in |quickfix|.
+
+The original idea of MRW comes from https://github.com/rbtnn/vim-mrw.
+
+=============================================================================
+USAGE							*mr-usage*
+
+Use |Mru| or |Mrw| to list MRU/MRW files in |qucikfix| like:
+>
+	:Mru
+	:Mrw
+<
+Use |copen| to automatically open |quickfix| like:
+>
+	:Mru | copen
+	:Mrw | copen
+<
+Or get |List| of MRU/MRW by calling |mr#mru#list()| or |mr#mrw#list()| like:
+>
+	:echo mr#mru#list()
+	:echo mr#mrw#list()
+<
+
+=============================================================================
+INTERFACE						*mr-interface*
+
+-----------------------------------------------------------------------------
+VARIABLE						*mr-variable*
+
+*g:mr_mru_disabled*
+	Disable recording MRU and skip defining |Mru| command.
+	Default: 0
+
+*g:mr_mrw_disabled*
+	Disable recording MRW and skip defining |Mrw| command.
+	Default: 0
+
+*g:mr#delay*
+	Delay time before record files in milliseconds.
+	Default: 200
+
+*g:mr#threshold*
+	The maximum number of entries of MRU/MRW to records.
+	Default: 1000
+
+*g:mr#mru#filename*
+	A filename to record MRU.
+	Default: "~/.cache/mr/mru"
+
+*g:mr#mrw#filename*
+	A filename to record MRW.
+	Default: "~/.cache/mr/mrw"
+
+-----------------------------------------------------------------------------
+COMMAND							*mr-command*
+
+							*:Mru*
+							*:Mrw*
+:Mru
+:Mrw
+	List MRU/MRW files in |quickfix|. Commands can be followed by a "|" to
+	continue another command like:
+>
+	:Mru | copen
+<
+	Use following plugins to filter |quickfix| if you want.
+
+	- lambdalisue/lista.vim
+	- kien/ctrlp.vim
+	- Shougo/denite.vim (with neoclide/denite-extra)
+	- junegunn/fzf (with fszymanski/fzf-quickfix)
+
+-----------------------------------------------------------------------------
+FUNCTION						*mr-function*
+
+						*mr#mru#list()*
+						*mr#mrw#list()*
+mr#mru#list()
+mr#mrw#list()
+	Return a |List| of |String| which indicates MRU/MRW.
+
+						*mr#mru#start_recording()*
+						*mr#mrw#start_recording()*
+mr#mru#start_recording()
+mr#mrw#start_recording()
+	Start MRU or MRW recording by |BufReadPost| or |BufWritePost|
+	|autocmd| respectively.
+
+						*mr#mru#stop_recording()*
+						*mr#mrw#stop_recording()*
+mr#mru#stop_recording()
+mr#mrw#stop_recording()
+	Stop MRU or MRW recording by |BufReadPost| or |BufWritePost|
+	|autocmd| respectively.
+
+
+=============================================================================
+FAQ							*mr-faq*
+
+Q.~
+
+Do you have a fuzzy finder version?
+
+A.~
+
+No. Use any fuzzy finder which supports |quickfix| instead.
+For example:
+
+- lambdalisue/lista.vim
+- kien/ctrlp.vim
+- Shougo/denite.vim (with neoclide/denite-extra)
+- junegunn/fzf (with fszymanski/fzf-quickfix)
+
+=============================================================================
+CHANGELOG						*mr-changelog*
+
+20XX-XX-XX~
+	Release v1.0.0
+
+=============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
