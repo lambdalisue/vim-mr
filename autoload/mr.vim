@@ -28,7 +28,9 @@ function! s:recorder_record(filename) abort dict
 endfunction
 
 function! s:record_delay(recorder) abort
-  silent! call timer_stop(a:recorder._timer)
+  if a:recorder._timer isnot# v:null
+    silent! call timer_stop(a:recorder._timer)
+  endif
   let a:recorder._timer = timer_start(
         \ g:mr#delay,
         \ { -> s:record(a:recorder) },
