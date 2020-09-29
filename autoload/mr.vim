@@ -60,6 +60,7 @@ function! s:uniq(candidates) abort
   let seen = {}
   let candidates = []
   for candidate in a:candidates
+    let candidate = resolve(candidate)
     if has_key(seen, candidate)
       continue
     endif
