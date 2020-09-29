@@ -1,5 +1,5 @@
 let g:mr#mru#filename = get(g:, 'mr#mru#filename', '~/.cache/mr/mru')
-let s:mru = mr#_new(expand(g:mr#mru#filename))
+let s:mru = mr#recorder#new(expand(g:mr#mru#filename))
 
 function! mr#mru#list() abort
   return s:mru.list()
@@ -7,13 +7,13 @@ endfunction
 
 function! mr#mru#start_recording() abort
   augroup mr-mru-internal
-    autocmd! *
-    autocmd BufReadPost * call s:mru.record(expand('<afile>:p'))
+    autocmd!
+    autocmd BufReadPost * call s:mru.record(expand('<afile>'))
   augroup END
 endfunction
 
 function! mr#mru#stop_recording() abort
   augroup mr-mru-internal
-    autocmd! *
+    autocmd!
   augroup END
 endfunction
