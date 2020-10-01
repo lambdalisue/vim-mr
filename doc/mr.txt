@@ -79,8 +79,8 @@ COMMAND							*mr-command*
 
 							*:Mru*
 							*:Mrw*
-:Mru
-:Mrw
+:Mru [-a/-r/-f]
+:Mrw [-a/-r/-f]
 	List MRU/MRW files in |quickfix|. Commands can be followed by a "|" to
 	continue another command like:
 >
