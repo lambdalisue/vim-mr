@@ -10,35 +10,21 @@ INTRODUCTION				|mr-introduction|
 USAGE					|mr-usage|
 INTERFACE				|mr-interface|
   VARIABLE				|mr-variable|
-  COMMAND				|mr-command|
   FUNCTION				|mr-function|
-FAQ					|mr-faq|
-CHANGELOG				|mr-changelog|
 
 
 =============================================================================
 INTRODUCTION						*mr-introduction*
 
 *mr.vim* (mr) is a plugin to asynchronously record MRU (Most Recently Used)
-and MRW (Most Recently Written) files. It also provides commands to list
-MRU/MRW in |quickfix|.
+and MRW (Most Recently Written) files.
 
 The original idea of MRW comes from https://github.com/rbtnn/vim-mrw.
 
 =============================================================================
 USAGE							*mr-usage*
 
-Use |Mru| or |Mrw| to list MRU/MRW files in |qucikfix| like:
->
-	:Mru
-	:Mrw
-<
-Use |copen| to automatically open |quickfix| like:
->
-	:Mru | copen
-	:Mrw | copen
-<
-Or get |List| of MRU/MRW by calling |mr#mru#list()| or |mr#mrw#list()| like:
+Get |List| of MRU/MRW by calling |mr#mru#list()| or |mr#mrw#list()| like:
 >
 	:echo mr#mru#list()
 	:echo mr#mrw#list()
@@ -51,11 +37,11 @@ INTERFACE						*mr-interface*
 VARIABLE						*mr-variable*
 
 *g:mr_mru_disabled*
-	Disable recording MRU and skip defining |Mru| command.
+	Disable recording MRU.
 	Default: 0
 
 *g:mr_mrw_disabled*
-	Disable recording MRW and skip defining |Mrw| command.
+	Disable recording MRW.
 	Default: 0
 
 *g:mr#delay*
@@ -75,26 +61,16 @@ VARIABLE						*mr-variable*
 	Default: "~/.cache/mr/mrw"
 
 -----------------------------------------------------------------------------
-COMMAND							*mr-command*
-
-							*:Mru*
-							*:Mrw*
-:Mru
-:Mrw
-	List MRU/MRW files in |quickfix|. Commands can be followed by a "|" to
-	continue another command like:
->
-	:Mru | copen
-<
-	Use following plugins to filter |quickfix| if you want.
-
-	- lambdalisue/lista.vim
-	- kien/ctrlp.vim
-	- Shougo/denite.vim (with neoclide/denite-extra)
-	- junegunn/fzf (with fszymanski/fzf-quickfix)
-
------------------------------------------------------------------------------
 FUNCTION						*mr-function*
+
+						*mr#filter()*
+mr#filter({items}, {path})
+	Return filtered {items} by {path}. In other word, it returns children
+	of {path} in {items}.
+>
+	" Filter mru by current working directory
+	echo mr#filter(mr#mru#list(), getcwd())
+<
 
 						*mr#mru#list()*
 						*mr#mrw#list()*
@@ -116,29 +92,6 @@ mr#mrw#stop_recording()
 	Stop MRU or MRW recording by |BufReadPost| or |BufWritePost|
 	|autocmd| respectively.
 
-
-=============================================================================
-FAQ							*mr-faq*
-
-Q.~
-
-Do you have a fuzzy finder version?
-
-A.~
-
-No. Use any fuzzy finder which supports |quickfix| instead.
-For example:
-
-- lambdalisue/lista.vim
-- kien/ctrlp.vim
-- Shougo/denite.vim (with neoclide/denite-extra)
-- junegunn/fzf (with fszymanski/fzf-quickfix)
-
-=============================================================================
-CHANGELOG						*mr-changelog*
-
-20XX-XX-XX~
-	Release v1.0.0
 
 =============================================================================
 vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
