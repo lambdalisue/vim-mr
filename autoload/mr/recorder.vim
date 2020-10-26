@@ -13,7 +13,11 @@ function! s:recorder_list() abort dict
   if !filereadable(filename)
     return []
   endif
-  return readfile(filename)[: g:mr#threshold - 1]
+  let items = filter(
+        \ readfile(filename),
+        \ '!empty(getftype(v:val))',
+        \)
+  return items
 endfunction
 
 function! s:recorder_record(filename) abort dict
