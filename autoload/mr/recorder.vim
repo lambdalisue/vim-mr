@@ -21,7 +21,7 @@ function! s:recorder_list() abort dict
 endfunction
 
 function! s:recorder_record(filename) abort dict
-  if !filereadable(a:filename)
+  if getftype(a:filename) ==# ''
     return
   endif
   let filename = simplify(resolve(fnamemodify(a:filename, ':p')))
