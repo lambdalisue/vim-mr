@@ -42,9 +42,9 @@ endfunction
 function! s:dump(recorder) abort
   try
     let fname = a:recorder._filename
+    call mkdir(fnamemodify(fname, ':h'), 'p', 0700)
     let items = reverse(a:recorder._items) + a:recorder.list()
     call filter(items, s:uniq_f())
-    call mkdir(fnamemodify(fname, ':h'), 'p', 0700)
     call writefile(items[: g:mr#threshold - 1], fname)
     let a:recorder._timer = v:null
     let a:recorder._items = []
