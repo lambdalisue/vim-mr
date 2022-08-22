@@ -1,10 +1,15 @@
-function! mr#recorder#new(filename) abort
+function! mr#recorder#new(filename, ...) abort
+  let options = extend({
+        \ 'exclude': '',
+        \}, a:0 ? a:1 : {},
+        \)
   return {
         \ '_timer': v:null,
         \ '_items': [],
         \ '_filename': a:filename,
         \ 'list': funcref('s:recorder_list'),
         \ 'record': funcref('s:recorder_record'),
+        \ 'exclude': options.exclude,
         \}
 endfunction
 
@@ -25,6 +30,9 @@ function! s:recorder_record(filename) abort dict
     return
   endif
   let filename = simplify(resolve(fnamemodify(a:filename, ':p')))
+  if !empty(self.exclude) && filename =~# self.exclude
+    return
+  endif
   call add(self._items, filename)
   call s:dump_delay(self)
 endfunction

@@ -62,6 +62,12 @@ VARIABLE						*mr-variable*
 	The maximum number of entries of MRU/MRW to records.
 	Default: 1000
 
+*g:mr#mru#exclude*
+*g:mr#mrw#exclude*
+*g:mr#mrr#exclude*
+	A string |pattern| to exclude path from recording.
+	Default: ""
+
 *g:mr#mru#filename*
 	A filename to record MRU.
 	Default: "~/.cache/mr/mru"

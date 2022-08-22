@@ -1,5 +1,8 @@
 let g:mr#mrw#filename = get(g:, 'mr#mrw#filename', '~/.cache/mr/mrw')
-let s:mrw = mr#recorder#new(expand(g:mr#mrw#filename))
+let g:mr#mrw#exclude = get(g:, 'mr#mrw#exclude', '')
+let s:mrw = mr#recorder#new(expand(g:mr#mrw#filename), {
+      \ 'exclude': g:mr#mrw#exclude,
+      \})
 
 function! mr#mrw#list() abort
   return s:mrw.list()
