@@ -1,13 +1,13 @@
 function! mr#recorder#new(filename, ...) abort
   let options = extend({
-        \ 'predicate': v:null,
+        \ 'predicates': [],
         \}, a:0 ? a:1 : {},
         \)
   return {
         \ '_timer': v:null,
         \ '_items': [],
         \ '_filename': a:filename,
-        \ '_predicate': options.predicate,
+        \ '_predicates': options.predicates,
         \ 'list': funcref('s:recorder_list'),
         \ 'record': funcref('s:recorder_record'),
         \}
@@ -30,9 +30,11 @@ function! s:recorder_record(filename) abort dict
     return
   endif
   let filename = simplify(resolve(fnamemodify(a:filename, ':p')))
-  if self._predicate isnot# v:null && !self._predicate(filename)
-    return
-  endif
+  for l:Predicate in self._predicates
+    if !l:Predicate(filename)
+      return
+    endif
+  endfor
   call add(self._items, filename)
   call s:dump_delay(self)
 endfunction

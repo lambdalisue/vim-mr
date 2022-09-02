@@ -1,7 +1,7 @@
 let g:mr#mrr#filename = get(g:, 'mr#mrr#filename', '~/.cache/mr/mrr')
-let g:mr#mrr#predicate = get(g:, 'mr#mrr#predicate', v:null)
+let g:mr#mrr#predicates = get(g:, 'mr#mrr#predicates', [])
 let s:mrr = mr#recorder#new(expand(g:mr#mrr#filename), {
-      \ 'predicate': g:mr#mrr#predicate,
+      \ 'predicates': g:mr#mrr#predicates,
       \})
 
 function! mr#mrr#list() abort
