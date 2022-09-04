@@ -74,6 +74,17 @@ VARIABLE						*mr-variable*
 	A filename to record MRR.
 	Default: "~/.cache/mr/mrr"
 
+*g:mr#mru#predicates*
+*g:mr#mrw#predicates*
+*g:mr#mrr#predicates*
+	A |List| of |Funcref| to predicate whether a file should be recorded.
+	Only file/directory that pass all predicate functions are recorded.
+>
+	" Do NOT record 'README.md'
+	let g:mr#mru#predicates = [{ filename -> filename !~# 'README.md' }]
+<
+	Default: []
+
 -----------------------------------------------------------------------------
 FUNCTION						*mr-function*
 

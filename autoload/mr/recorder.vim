@@ -1,8 +1,13 @@
-function! mr#recorder#new(filename) abort
+function! mr#recorder#new(filename, ...) abort
+  let options = extend({
+        \ 'predicates': [],
+        \}, a:0 ? a:1 : {},
+        \)
   return {
         \ '_timer': v:null,
         \ '_items': [],
         \ '_filename': a:filename,
+        \ '_predicates': options.predicates,
         \ 'list': funcref('s:recorder_list'),
         \ 'record': funcref('s:recorder_record'),
         \}
@@ -25,6 +30,11 @@ function! s:recorder_record(filename) abort dict
     return
   endif
   let filename = simplify(resolve(fnamemodify(a:filename, ':p')))
+  for l:Predicate in self._predicates
+    if !l:Predicate(filename)
+      return
+    endif
+  endfor
   call add(self._items, filename)
   call s:dump_delay(self)
 endfunction
@@ -42,9 +52,9 @@ endfunction
 function! s:dump(recorder) abort
   try
     let fname = a:recorder._filename
+    call mkdir(fnamemodify(fname, ':h'), 'p', 0700)
     let items = reverse(a:recorder._items) + a:recorder.list()
     call filter(items, s:uniq_f())
-    call mkdir(fnamemodify(fname, ':h'), 'p', 0700)
     call writefile(items[: g:mr#threshold - 1], fname)
     let a:recorder._timer = v:null
     let a:recorder._items = []
