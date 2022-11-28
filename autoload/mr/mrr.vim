@@ -14,6 +14,7 @@ function! mr#mrr#start_recording() abort
     autocmd VimEnter    * call s:record(getcwd())
     autocmd BufReadPost * call s:record(expand('%'))
     autocmd DirChanged  * call s:record(expand('<afile>'))
+    autocmd VimLeave    * call s:mrr.dump()
   augroup END
 endfunction
 
