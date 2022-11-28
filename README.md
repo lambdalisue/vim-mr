@@ -1,5 +1,10 @@
 # 🎩 mr.vim
 
+> **Warning**
+>
+> Default branch has been changed from master to main.
+> Please change your reference branch to main to keep up with the latest changes.
+
 _mr.vim_ (mr) is a plugin to asynchronously record MRU (Most Recently Used files), MRW (Most Recently Written files), or MRR (Most Recent git Repositories.)
 
 ### Function
