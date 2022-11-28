@@ -10,6 +10,7 @@ function! mr#recorder#new(filename, ...) abort
         \ '_predicates': options.predicates,
         \ 'list': funcref('s:recorder_list'),
         \ 'record': funcref('s:recorder_record'),
+        \ 'dump': funcref('s:recorder_dump'),
         \}
 endfunction
 
@@ -37,6 +38,10 @@ function! s:recorder_record(filename) abort dict
   endfor
   call add(self._items, filename)
   call s:dump_delay(self)
+endfunction
+
+function! s:recorder_dump() abort dict
+  call s:dump(self)
 endfunction
 
 function! s:dump_delay(recorder) abort

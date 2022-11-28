@@ -12,6 +12,7 @@ function! mr#mru#start_recording() abort
   augroup mr-mru-internal
     autocmd!
     autocmd BufReadPost * call s:mru.record(expand('<afile>'))
+    autocmd VimLeave    * call s:mru.dump()
   augroup END
 endfunction
 

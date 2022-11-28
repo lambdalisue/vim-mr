@@ -12,6 +12,7 @@ function! mr#mrw#start_recording() abort
   augroup mr-mrw-internal
     autocmd!
     autocmd BufWritePost * call s:mrw.record(expand('<afile>'))
+    autocmd VimLeave     * call s:mrw.dump()
   augroup END
 endfunction
 
