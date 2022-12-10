@@ -49,7 +49,10 @@ To use mr.vim with ctrlp, use ctrlp-mr.vim plugin and configure below:
 	        \ + ['mr/mru', 'mr/mrw', 'mr/mrr']
 <
 
+ctrlp.vim: https://github.com/ctrlpvim/ctrlp.vim
+ctrlp-mr.vim: https://github.com/tsuyoshicho/ctrlp-mr.vim
 
+-----------------------------------------------------------------------------
 ASYNCOMPLETE USAGE					*mr-usage-asyncomplete*
 
 |asyncomplete| is Pure Vim script async auto completion plugin.
@@ -83,6 +86,11 @@ Alternatively, use asyncomplete-anylist plugin and configure below:
 	\     },
 	\   }))
 <
+
+asyncomplete.vim: https://github.com/prabirshrestha/asyncomplete.vim
+asyncomplete-mr.vim: https://github.com/tsuyoshicho/asyncomplete-mr.vim
+asyncomplete-anylist: https://github.com/tsuyoshicho/asyncomplete-anylist
+
 
 =============================================================================
 INTERFACE						*mr-interface*
