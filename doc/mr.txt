@@ -42,54 +42,52 @@ How to use under fuzzy finder or auto completion plugin.
 
 CTRLP USAGE						*mr-usage-ctrlp*
 
-|ctrlp| is Pure Vim script fuzzy finder plugin.
-To use mr.vim with ctrlp, use ctrlp-mr.vim plugin and configure below:
+ctrlp.vim (https://github.com/ctrlpvim/ctrlp.vim) is Pure Vim script fuzzy
+finder plugin. To use mr.vim with ctrlp.vim, use ctrlp-mr.vim
+(https://github.com/tsuyoshicho/ctrlp-mr.vim) plugin and configure below:
 >
 	let g:ctrlp_extensions = get(g:, 'ctrlp_extensions', [])
 	        \ + ['mr/mru', 'mr/mrw', 'mr/mrr']
 <
 
-ctrlp.vim: https://github.com/ctrlpvim/ctrlp.vim
-ctrlp-mr.vim: https://github.com/tsuyoshicho/ctrlp-mr.vim
-
 -----------------------------------------------------------------------------
 ASYNCOMPLETE USAGE					*mr-usage-asyncomplete*
 
-|asyncomplete| is Pure Vim script async auto completion plugin.
-To use mr.vim with asyncomplete, use asyncomplete-mr.vim plugin and configure
+asyncomplete.vim (https://github.com/prabirshrestha/asyncomplete.vim) is Pure
+Vim script async auto completion plugin. To use mr.vim with asyncomplete.vim,
+use asyncomplete-mr.vim (https://github.com/tsuyoshicho/asyncomplete-mr.vim)
+plugin and configure below:
+>
+	" Setting to use MRU, same for MRW and MRR.
+	autocmd User asyncomplete_setup call asyncomplete#register_source(
+	    \ asyncomplete#sources#mru#get_source_options({
+	    \   'name': 'mru',
+	    \   'allowlist': ['*'],
+	    \   'completor': function('asyncomplete#sources#mru#completor'),
+	    \ })
+	    \)
+<
+
+Alternatively, use asyncomplete-anylist
+(https://github.com/tsuyoshicho/asyncomplete-anylist) plugin and configure
 below:
 >
 	" Setting to use MRU, same for MRW and MRR.
-	autocmd User asyncomplete_setup call
-	\ asyncomplete#register_source(
-	\   asyncomplete#sources#mru#get_source_options({
-	\     'name': 'mru',
-	\     'allowlist': ['*'],
-	\     'completor': function('asyncomplete#sources#mru#completor'),
-	\   }))
+	autocmd User asyncomplete_setup call asyncomplete#register_source(
+	    \ asyncomplete#sources#anylist#get_source_options({
+	    \   'name': 'anylist',
+	    \   'allowlist': ['*'],
+	    \   'completor': function('asyncomplete#sources#anylist#completor'),
+	    \   'config': {
+	    \     'matcher': '\(\w\|\f\)+$',
+	    \     'items': [
+	    \       {'name': 'mru',
+	    \        'function': function('mr#mru#list'), 'args': []},
+	    \     ],
+	    \   },
+	    \ })
+	    \)
 <
-
-Alternatively, use asyncomplete-anylist plugin and configure below:
->
-	" Setting to use MRU, same for MRW and MRR.
-	autocmd User asyncomplete_setup call
-	\ asyncomplete#register_source(
-	\   asyncomplete#sources#anylist#get_source_options({
-	\     'name': 'anylist',
-	\     'allowlist': ['*'],
-	\     'completor': function('asyncomplete#sources#anylist#completor'),
-	\     'config': {
-	\       'matcher': '\(\w\|\f\)+$',
-	\       'items': [
-	\         {'name': 'mru', 'function': function('mr#mru#list'), 'args': []},
-	\       ],
-	\     },
-	\   }))
-<
-
-asyncomplete.vim: https://github.com/prabirshrestha/asyncomplete.vim
-asyncomplete-mr.vim: https://github.com/tsuyoshicho/asyncomplete-mr.vim
-asyncomplete-anylist: https://github.com/tsuyoshicho/asyncomplete-anylist
 
 
 =============================================================================
