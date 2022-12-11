@@ -8,6 +8,8 @@ CONTENTS						*mr-contents*
 
 INTRODUCTION				|mr-introduction|
 USAGE					|mr-usage|
+  CTRLP USAGE				|mr-usage-ctrlp|
+  ASYNCOMPLETE USAGE			|mr-usage-asyncomplete|
 INTERFACE				|mr-interface|
   VARIABLE				|mr-variable|
   FUNCTION				|mr-function|
@@ -35,6 +37,58 @@ Get |List| of MRU/MRW/MRR by calling |mr#mru#list()|, |mr#mrw#list()|, or
 	:echo mr#mrw#list()
 	:echo mr#mrr#list()
 <
+
+How to use under fuzzy finder or auto completion plugin.
+
+CTRLP USAGE						*mr-usage-ctrlp*
+
+ctrlp.vim (https://github.com/ctrlpvim/ctrlp.vim) is Pure Vim script fuzzy
+finder plugin. To use mr.vim with ctrlp.vim, use ctrlp-mr.vim
+(https://github.com/tsuyoshicho/ctrlp-mr.vim) plugin and configure below:
+>
+	let g:ctrlp_extensions = get(g:, 'ctrlp_extensions', [])
+	        \ + ['mr/mru', 'mr/mrw', 'mr/mrr']
+<
+
+-----------------------------------------------------------------------------
+ASYNCOMPLETE USAGE					*mr-usage-asyncomplete*
+
+asyncomplete.vim (https://github.com/prabirshrestha/asyncomplete.vim) is Pure
+Vim script async auto completion plugin. To use mr.vim with asyncomplete.vim,
+use asyncomplete-mr.vim (https://github.com/tsuyoshicho/asyncomplete-mr.vim)
+plugin and configure below:
+>
+	" Setting to use MRU, same for MRW and MRR.
+	autocmd User asyncomplete_setup call asyncomplete#register_source(
+	    \ asyncomplete#sources#mru#get_source_options({
+	    \   'name': 'mru',
+	    \   'allowlist': ['*'],
+	    \   'completor': function('asyncomplete#sources#mru#completor'),
+	    \ })
+	    \)
+<
+
+Alternatively, use asyncomplete-anylist
+(https://github.com/tsuyoshicho/asyncomplete-anylist) plugin and configure
+below:
+>
+	" Setting to use MRU, same for MRW and MRR.
+	autocmd User asyncomplete_setup call asyncomplete#register_source(
+	    \ asyncomplete#sources#anylist#get_source_options({
+	    \   'name': 'anylist',
+	    \   'allowlist': ['*'],
+	    \   'completor': function('asyncomplete#sources#anylist#completor'),
+	    \   'config': {
+	    \     'matcher': '\(\w\|\f\)+$',
+	    \     'items': [
+	    \       {'name': 'mru',
+	    \        'function': function('mr#mru#list'), 'args': []},
+	    \     ],
+	    \   },
+	    \ })
+	    \)
+<
+
 
 =============================================================================
 INTERFACE						*mr-interface*
