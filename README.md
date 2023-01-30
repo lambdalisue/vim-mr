@@ -12,6 +12,14 @@ Use `mr#mru#list()`, `mr#mrw#list()`, or `mr#mrr#list()` to list MRU/MRW/MRR lik
 :echo mr#mrr#list()
 ```
 
+If you want to delete a filename from each list:
+
+```
+:call mr#mru#delete("foo.txt")
+:call mr#mrw#delete("foo.txt")
+:call mr#mrr#delete("foo.txt")
+```
+
 ### Special thanks
 
 The original idea of MRW comes from https://github.com/rbtnn/vim-mrw.

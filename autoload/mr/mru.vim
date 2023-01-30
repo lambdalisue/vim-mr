@@ -21,3 +21,8 @@ function! mr#mru#stop_recording() abort
     autocmd!
   augroup END
 endfunction
+
+function! mr#mru#delete(filename) abort
+  return s:mru.delete(a:filename)
+endfunction
+

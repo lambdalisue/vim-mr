@@ -8,8 +8,10 @@ function! mr#recorder#new(filename, ...) abort
         \ '_items': [],
         \ '_filename': a:filename,
         \ '_predicates': options.predicates,
+        \ '_deletes': {},
         \ 'list': funcref('s:recorder_list'),
         \ 'record': funcref('s:recorder_record'),
+        \ 'delete': funcref('s:recorder_delete'),
         \ 'dump': funcref('s:recorder_dump'),
         \}
 endfunction
@@ -40,6 +42,24 @@ function! s:recorder_record(filename) abort dict
   call s:dump_delay(self)
 endfunction
 
+function! s:recorder_delete(...) abort dict
+  let list = a:000
+  if a:0 == 1 && type(a:1) == 3
+   " accept a list
+    let list = a:1
+  endif
+  if len(list) == 0
+    return
+  endif
+  let self._deletes = reduce(
+        \ list,
+        \ {acc, v -> 
+            \ extend(acc, {simplify(resolve(fnamemodify(v, ':p'))): 1})
+        \ },
+        \ self._deletes)
+  call s:dump_delay(self)
+endfunction
+
 function! s:recorder_dump() abort dict
   call s:dump(self)
 endfunction
@@ -59,7 +79,8 @@ function! s:dump(recorder) abort
     let fname = a:recorder._filename
     call mkdir(fnamemodify(fname, ':h'), 'p', 0700)
     let items = reverse(a:recorder._items) + a:recorder.list()
-    call filter(items, s:uniq_f())
+    call filter(items, s:trim_f(a:recorder._deletes))
+    let a:recorder._deletes = {}
     call writefile(items[: g:mr#threshold - 1], fname)
     let a:recorder._timer = v:null
     let a:recorder._items = []
@@ -73,11 +94,13 @@ function! s:dump(recorder) abort
   endtry
 endfunction
 
-function! s:uniq_f() abort
+function! s:trim_f(deletes) abort
   let seen = {}
   return { k, v ->
         \ has_key(seen, v)
         \   ? 0
-        \   : !empty(extend(seen, { v : 1 }))
+        \   : has_key(a:deletes, v)
+        \       ? 0
+        \       : !empty(extend(seen, { v : 1 }))
         \}
 endfunction
