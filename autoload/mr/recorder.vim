@@ -42,21 +42,9 @@ function! s:recorder_record(filename) abort dict
   call s:dump_delay(self)
 endfunction
 
-function! s:recorder_delete(...) abort dict
-  let list = a:000
-  if a:0 == 1 && type(a:1) == 3
-   " accept a list
-    let list = a:1
-  endif
-  if len(list) == 0
-    return
-  endif
-  let self._deletes = reduce(
-        \ list,
-        \ {acc, v -> 
-            \ extend(acc, {simplify(resolve(fnamemodify(v, ':p'))): 1})
-        \ },
-        \ self._deletes)
+function! s:recorder_delete(filename) abort dict
+  let norm = simplify(resolve(fnamemodify(a:filename, ':p')))
+  let self._deletes[norm] = 1
   call s:dump_delay(self)
 endfunction
 
