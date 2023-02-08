@@ -24,6 +24,10 @@ function! mr#mrr#stop_recording() abort
   augroup END
 endfunction
 
+function! mr#mrr#delete(filename) abort
+  return s:mrr.delete(a:filename)
+endfunction
+
 function! s:record(path) abort
   let path = fnamemodify(a:path, ':p')
   let path = finddir('.git/..', path . ';')
