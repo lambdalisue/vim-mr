@@ -83,12 +83,10 @@ function! s:dump(recorder) abort
 endfunction
 
 function! s:trim_f(deletes) abort
-  let seen = {}
+  let seen = copy(a:deletes)
   return { k, v ->
         \ has_key(seen, v)
         \   ? 0
-        \   : has_key(a:deletes, v)
-        \       ? 0
-        \       : !empty(extend(seen, { v : 1 }))
+        \   : !empty(extend(seen, { v : 1 }))
         \}
 endfunction
