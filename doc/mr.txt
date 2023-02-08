@@ -178,10 +178,10 @@ mr#mrr#stop_recording()
 						*mr#mru#delete()*
 						*mr#mrw#delete()*
 						*mr#mrr#delete()*
-mr#mru#delete(filename)
-mr#mrw#delete(filename)
-mr#mrr#delete(filename)
-	Delete a filename from the MRU/MRW/MRR list.
+mr#mru#delete({filename})
+mr#mrw#delete({filename})
+mr#mrr#delete({filename})
+	Delete a {filename} from the MRU/MRW/MRR list.
 
 
 =============================================================================
