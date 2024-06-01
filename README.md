@@ -1,6 +1,6 @@
-# 🎩 mr.vim
+# 🎩 vim-mr
 
-_mr.vim_ (mr) is a plugin to asynchronously record MRU (Most Recently Used files), MRW (Most Recently Written files), or MRR (Most Recent git Repositories.)
+_vim-mr_ (mr) is a plugin to asynchronously record MRU (Most Recently Used files), MRW (Most Recently Written files), or MRR (Most Recent git Repositories.)
 
 ### Function
 
