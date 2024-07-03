@@ -14,3 +14,7 @@ endif
 if !get(g:, 'mr_mrr_disabled')
   call mr#mrr#start_recording()
 endif
+
+if !get(g:, 'mr_mrd_disabled')
+  call mr#mrd#start_recording()
+endif

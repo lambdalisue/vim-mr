@@ -23,6 +23,7 @@ INTRODUCTION						*mr-introduction*
 - MRU (Most Recently Used files)
 - MRW (Most Recently Written files)
 - MRR (Most Recent git Repositories)
+- MRD (Most Recent Directories)
 
 The original idea of MRW comes from https://github.com/rbtnn/vim-mrw.
 
@@ -30,12 +31,13 @@ The original idea of MRW comes from https://github.com/rbtnn/vim-mrw.
 =============================================================================
 USAGE							*mr-usage*
 
-Get |List| of MRU/MRW/MRR by calling |mr#mru#list()|, |mr#mrw#list()|, or
-|mr#mrr#list()| like:
+Get |List| of MRU/MRW/MRR by calling |mr#mru#list()|, |mr#mrw#list()|,
+|mr#mrr#list()|, or |mr#mrd#list()| like:
 >
 	:echo mr#mru#list()
 	:echo mr#mrw#list()
 	:echo mr#mrr#list()
+	:echo mr#mrd#list()
 <
 
 How to use under fuzzy finder or auto completion plugin.
@@ -108,6 +110,10 @@ VARIABLE						*mr-variable*
 	Disable recording MRR.
 	Default: 0
 
+*g:mr_mrd_disabled*
+	Disable recording MRD.
+	Default: 0
+
 *g:mr#delay*
 	Delay time before record files in milliseconds.
 	Default: 200
@@ -128,9 +134,14 @@ VARIABLE						*mr-variable*
 	A filename to record MRR.
 	Default: "~/.cache/mr/mrr"
 
+*g:mr#mrd#filename*
+	A filename to record MRD.
+	Default: "~/.cache/mr/mrd"
+
 *g:mr#mru#predicates*
 *g:mr#mrw#predicates*
 *g:mr#mrr#predicates*
+*g:mr#mrd#predicates*
 	A |List| of |Funcref| to predicate whether a file should be recorded.
 	Only file/directory that pass all predicate functions are recorded.
 >
@@ -154,35 +165,64 @@ mr#filter({items}, {path})
 						*mr#mru#list()*
 						*mr#mrw#list()*
 						*mr#mrr#list()*
+						*mr#mrd#list()*
 mr#mru#list()
 mr#mrw#list()
 mr#mrr#list()
-	Return a |List| of |String| which indicates MRU/MRW/MRR.
+mr#mrd#list()
+	Return a |List| of |String| which indicates MRU/MRW/MRR/MRD.
 
 						*mr#mru#start_recording()*
 						*mr#mrw#start_recording()*
 						*mr#mrr#start_recording()*
+						*mr#mrd#start_recording()*
 mr#mru#start_recording()
 mr#mrw#start_recording()
 mr#mrr#start_recording()
-	Start MRU/MRW/MRR recording by several |autocmd|.
+mr#mrd#start_recording()
+	Start MRU/MRW/MRR/MRD recording by several |autocmd|.
 
 						*mr#mru#stop_recording()*
 						*mr#mrw#stop_recording()*
 						*mr#mrr#stop_recording()*
+						*mr#mrd#stop_recording()*
 mr#mru#stop_recording()
 mr#mrw#stop_recording()
 mr#mrr#stop_recording()
-	Stop MRU/MRW/MRR recording by several |autocmd|.
+mr#mrd#stop_recording()
+	Stop MRU/MRW/MRR/MRD recording by several |autocmd|.
 
 						*mr#mru#delete()*
 						*mr#mrw#delete()*
 						*mr#mrr#delete()*
+						*mr#mrd#delete()*
 mr#mru#delete({filename})
 mr#mrw#delete({filename})
 mr#mrr#delete({filename})
-	Delete a {filename} from the MRU/MRW/MRR list.
+mr#mrd#delete({filename})
+	Delete a {filename} from the MRU/MRW/MRR/MRD list.
 
+-----------------------------------------------------------------------------
+DENOPS							*mr-denops*
+
+mr provides the following denops APIs.
+
+mrr:list						*mr-denops-mrr-list*
+	Return a list of MRR.
+
+mru:list						*mr-denops-mru-list*
+	Return a list of MRU.
+
+mrw:list						*mr-denops-mrw-list*
+	Return a list of MRW.
+
+mrd:list						*mr-denops-mrd-list*
+	Return a list of MRD.
+
+>
+	// Get MRU list
+	const mru = await denops.dispatch("mr", "mru:list");
+<
 
 =============================================================================
 vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
