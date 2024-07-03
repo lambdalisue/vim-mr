@@ -12,7 +12,6 @@ function! mr#mrd#start_recording() abort
   augroup mr-mrd-internal
     autocmd!
     autocmd VimEnter    * call s:record(getcwd())
-    autocmd BufReadPost * call s:record(expand('%:p:h'))
     autocmd DirChanged  * call s:record(expand('<afile>'))
     autocmd VimLeave    * call s:mrd.dump()
   augroup END
