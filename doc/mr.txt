@@ -183,6 +183,24 @@ mr#mrw#delete({filename})
 mr#mrr#delete({filename})
 	Delete a {filename} from the MRU/MRW/MRR list.
 
+-----------------------------------------------------------------------------
+DENOPS							*mr-denops*
+
+mr provides the following denops APIs.
+
+mrr:list						*mr-denops-mrr-list*
+	Return a list of MRR.
+
+mru:list						*mr-denops-mru-list*
+	Return a list of MRU.
+
+mrw:list						*mr-denops-mrw-list*
+	Return a list of MRW.
+
+>
+	// Get MRU list
+	const mru = await denops.dispatch("mr", "mru:list");
+<
 
 =============================================================================
 vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
