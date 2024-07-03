@@ -9,6 +9,7 @@ export const main: Entrypoint = (denops) => {
     "mrr:list": () => list(denops, "mr#mrr#filename"),
     "mru:list": () => list(denops, "mr#mru#filename"),
     "mrw:list": () => list(denops, "mr#mrw#filename"),
+    "mrd:list": () => list(denops, "mr#mrd#filename"),
   };
 };
 
