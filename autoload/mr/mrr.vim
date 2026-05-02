@@ -29,9 +29,10 @@ function! mr#mrr#delete(filename) abort
 endfunction
 
 function! s:record(path) abort
-  let path = fnamemodify(a:path, ':p')
-  let path = finddir('.git/..', path . ';')
+  let path = fnamemodify(a:path, ':p:h')
+  let path = finddir('.git', path . ';')
   if path !=# ''
+    let path = fnamemodify(path, ':p:h:h')
     call s:mrr.record(path)
   endif
 endfunction
